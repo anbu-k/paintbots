@@ -1,0 +1,2 @@
+HIT_DURATION 28      # Missing '=' sign
+PAINTBLOB-LIMIT = 30 # Incorrect parameter name format

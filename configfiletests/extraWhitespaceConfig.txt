@@ -1,0 +1,2 @@
+FOG_LOWER_BOUND    =  3  
+FOG_UPPER_BOUND  =    7  
