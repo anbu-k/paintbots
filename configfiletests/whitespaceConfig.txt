@@ -1,0 +1,3 @@
+    HIT_DURATION   =    25  
+PAINTBLOB_LIMIT  =  35    
+   ROCK_LOWER_BOUND   = 15  

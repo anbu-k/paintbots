@@ -2,7 +2,7 @@
 #ifndef BOARDSQUARE_H
 #define BOARDSQUARE_H
 
-// Enumeration for directions
+// directions
 enum class Direction {
     NORTH,
     SOUTH,
@@ -10,7 +10,7 @@ enum class Direction {
     WEST
 };
 
-// Enumeration for square types
+// square types
 enum class SquareType {
     EMPTY,
     ROCK,
@@ -18,7 +18,7 @@ enum class SquareType {
     WALL
 };
 
-// Enumeration for colors
+// colors
 enum class Color {
     RED,
     BLUE,
