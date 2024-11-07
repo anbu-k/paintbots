@@ -51,7 +51,11 @@
         "streambuf": "cpp",
         "text_encoding": "cpp",
         "typeinfo": "cpp",
+<<<<<<< HEAD
         "variant": "cpp",
         "pointcloud.h": "c"
+=======
+        "variant": "cpp"
+>>>>>>> bc467238143376db0073f16d96094b29012fde6a
     }
 }

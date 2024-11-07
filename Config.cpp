@@ -5,17 +5,17 @@
 #include <algorithm>
 #include <cctype>
 
-// Default constructor
+// constructor
 Config::Config() 
     : hitDuration(20), paintBlobLimit(30), rockLowerBound(10), rockUpperBound(20),
       fogLowerBound(5), fogUpperBound(10), longRangeLimit(30) {}
 
-// Constructor that parses a configuration file
+// Constructor that parses configuration file
 Config::Config(const std::string& filePath) : Config() {
     parseConfigFile(filePath);
 }
 
-// Getter methods
+// getters
 int Config::getHitDuration() const {
     return hitDuration;
 }
@@ -44,7 +44,7 @@ int Config::getLongRangeLimit() const {
     return longRangeLimit;
 }
 
-// Helper method to parse the configuration file
+// Helper that parses the configuration file
 void Config::parseConfigFile(const std::string& filePath) {
     std::ifstream file(filePath);
     if (!file) {
@@ -54,7 +54,7 @@ void Config::parseConfigFile(const std::string& filePath) {
     std::string line;
     while (std::getline(file, line)) {
         line = trim(line);
-        if (line.empty() || line[0] == '#') continue;  // Skip empty lines and comments
+        if (line.empty() || line[0] == '#') continue;  // Skips empty lines and comments
 
         std::istringstream lineStream(line);
         std::string key, equalsSign, value;
@@ -62,10 +62,10 @@ void Config::parseConfigFile(const std::string& filePath) {
             throw std::runtime_error("Error: Invalid line in configuration file: " + line);
         }
 
-        // Convert key to uppercase for case insensitivity
+        // Converts keys to uppercase 
         std::transform(key.begin(), key.end(), key.begin(), ::toupper);
 
-        // Parse the value and assign it to the appropriate member variable
+        // Parses the value and assigns it to the member variable
         int intValue = std::stoi(value);
         if (key == "HIT_DURATION") hitDuration = intValue;
         else if (key == "PAINTBLOB_LIMIT") paintBlobLimit = intValue;
@@ -83,7 +83,10 @@ void Config::parseConfigFile(const std::string& filePath) {
 // Helper method to trim whitespace from a string
 std::string Config::trim(const std::string& str) {
     size_t first = str.find_first_not_of(" \t");
+
     if (first == std::string::npos) return "";
+
     size_t last = str.find_last_not_of(" \t");
+    
     return str.substr(first, (last - first + 1));
 }

@@ -7,10 +7,10 @@
 
 class ExternalBoardSquare {
 public:
-    // Constructor: Takes an InternalBoardSquare and copies values
+    // Constructor: takes an InternalBoardSquare and copies the values
     ExternalBoardSquare(const InternalBoardSquare& internalSquare);
 
-    // Methods to access data, without modifying the original square
+    // Methods to access data without modifying the original square
     Color getSquareColor() const;
     bool redRobotPresent() const;
     bool blueRobotPresent() const;
@@ -18,7 +18,7 @@ public:
     SquareType getSquareType() const;
 
 private:
-    // Member variables copied from InternalBoardSquare
+    // member variables copied from InternalBoardSquare
     Color squareColor;
     bool redRobotPresentFlag;
     bool blueRobotPresentFlag;
@@ -26,4 +26,4 @@ private:
     SquareType squareType;
 };
 
-#endif // EXTERNALBOARDSQUARE_H
+#endif 
