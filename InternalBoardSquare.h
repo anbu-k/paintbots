@@ -2,33 +2,18 @@
 #ifndef INTERNALBOARDSQUARE_H
 #define INTERNALBOARDSQUARE_H
 
-#include "BoardSquare.h"  // header
+#include "BoardSquare.h"
 
-class InternalBoardSquare {
+class InternalBoardSquare : public BoardSquare
+{
 public:
-    // Constructor
-    InternalBoardSquare(SquareType type = SquareType::EMPTY, Color color = Color::WHITE);
+    // Default Constructor
+    InternalBoardSquare()
+        : BoardSquare() {}
 
-    // Getters
-    SquareType getSquareType() const;
-    Color getSquareColor() const;
-    bool isRedRobotPresent() const;
-    bool isBlueRobotPresent() const;
-    Direction getRobotDirection() const;
-
-    // Setters
-    void setSquareType(SquareType type);
-    void setSquareColor(Color color);
-    void setRedRobotPresent(bool isPresent);
-    void setBlueRobotPresent(bool isPresent);
-    void setRobotDirection(Direction direction);
-
-private:
-    SquareType squareType;     // Type of the square EMPTY, ROCK, FOG, WALL
-    Color squareColor;         // Color of the square RED, BLUE, WHITE
-    bool redRobotPresent;      // Whether the red robot is present on this square
-    bool blueRobotPresent;     // Whether the blue robot is present on this square
-    Direction robotDirection;  // Direction the robot in this square is facing
+    // Specific Constructor
+    InternalBoardSquare(SquareType type, Color color, bool redPresent = false, bool bluePresent = false, Direction direction = Direction::NORTH)
+        : BoardSquare(color, type, redPresent, bluePresent, direction) {}
 };
 
-#endif 
+#endif // INTERNALBOARDSQUARE_H
