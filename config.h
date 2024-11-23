@@ -8,7 +8,7 @@
 class Config {
 public:
     // Constructors
-    Config();  // Default constructor with default values
+    Config();  // Default constructor 
     Config(const std::string& filePath);  // Constructor that parses a configuration file
 
     // Getter methods for configuration parameters
