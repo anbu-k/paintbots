@@ -76,7 +76,7 @@ public:
         return *this;
     }
 
-    // Virtual Destructor
+    // Destructor
     virtual ~BoardSquare() {}
 
     // Inline Getter Methods
@@ -94,4 +94,4 @@ public:
     inline void setRobotDirection(Direction direction) { robotDirectionValue = direction; }
 };
 
-#endif // BOARDSQUARE_H
+#endif 

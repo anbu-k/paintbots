@@ -4,7 +4,7 @@
 #include <cstdlib> // For rand()
 #include <iostream>
 
-// Static instance initialization
+// Static initialization
 GameBoard *GameBoard::uniqueInstance = nullptr;
 
 // Default constructor
@@ -16,10 +16,10 @@ GameBoard::GameBoard()
 // Constructor with Config object
 GameBoard::GameBoard(const Config &config)
 {
-    initializeBoardFromConfig(config);
+    initializeConfigBoard(config);
 }
 
-// Static method to get instance with default initialization
+// default initialization
 GameBoard *GameBoard::getInstance(const std::string &password)
 {
     if (password != "xyzzy")
@@ -49,7 +49,7 @@ GameBoard *GameBoard::getInstance(const std::string &password, const Config &con
     return uniqueInstance;
 }
 
-// Access a square on the board
+// Accesses a square on the board
 InternalBoardSquare &GameBoard::getSquare(int row, int col)
 {
     if (row < 0 || row >= 15 || col < 0 || col >= 15)
@@ -59,19 +59,18 @@ InternalBoardSquare &GameBoard::getSquare(int row, int col)
     return board[row][col];
 }
 
-// Initialize the board with default settings
+// Initializes the board with default settings
 void GameBoard::initializeDefaultBoard()
 {
     board = std::vector<std::vector<InternalBoardSquare>>(15, std::vector<InternalBoardSquare>(15));
-    // Default robot positions
     redRobotRow = 0;
     redRobotCol = 0;
     blueRobotRow = 14;
     blueRobotCol = 14;
 }
 
-// Initialize the board based on configuration
-void GameBoard::initializeBoardFromConfig(const Config &config)
+// Initializes the board based on configuration
+void GameBoard::initializeConfigBoard(const Config &config)
 {
     initializeDefaultBoard();
 
@@ -97,32 +96,32 @@ void GameBoard::initializeBoardFromConfig(const Config &config)
     }
 }
 
-// Move robot on the board
+// performs the request move on the designated robot
 bool GameBoard::MoveRobot(RobotMoveRequest &mr)
 {
-    int &robotRow = (mr.robot == RobotColor::RED) ? redRobotRow : blueRobotRow;
-    int &robotCol = (mr.robot == RobotColor::RED) ? redRobotCol : blueRobotCol;
+    int &robotRow = (mr.robot == RobotColor::XRED) ? redRobotRow : blueRobotRow;
+    int &robotCol = (mr.robot == RobotColor::XRED) ? redRobotCol : blueRobotCol;
 
     moveRobot(mr, robotRow, robotCol);
 
-    // Update the square the robot moves off of
-    board[robotRow][robotCol].setSquareColor((mr.robot == RobotColor::RED) ? Color::RED : Color::BLUE);
+    // Updates the square the robot moves off of
+    board[robotRow][robotCol].setSquareColor((mr.robot == RobotColor::XRED) ? Color::RED : Color::BLUE);
     notifyRobotMove(mr);
-    return true; // Always returns true for now
+    return true;  // always returns true since a move can always be made
 }
 
-// Check if paint blob hits
+// Checks if paint blob hits, returns true if the robot specified in RobotMoveRequest structure would hit the other robot if it fired
 bool GameBoard::PaintBlobHit(RobotMoveRequest &mr)
 {
-    // Example implementation, assuming straight-line shooting
-    int targetRow = (mr.robot == RobotColor::RED) ? blueRobotRow : redRobotRow;
-    int targetCol = (mr.robot == RobotColor::RED) ? blueRobotCol : redRobotCol;
+    // Determines the target robots position
+    int targetRow = (mr.robot == RobotColor::XRED) ? blueRobotRow : redRobotRow;
+    int targetCol = (mr.robot == RobotColor::XRED) ? blueRobotCol : redRobotCol;
 
-    // Check if any obstacles block the shot
+    // returns true if the square at the target position is not a ROCK, and false otherwise
     return !(board[targetRow][targetCol].getSquareType() == SquareType::ROCK);
 }
 
-// Score calculation
+//  returns the number of blue squares on the board 
 int GameBoard::blueScore() const
 {
     int score = 0;
@@ -139,6 +138,7 @@ int GameBoard::blueScore() const
     return score;
 }
 
+ // Sets the square color in the board
 void GameBoard::setSquareColor(int row, int col, Color c)
 {
     if (row >= 0 && row < 15 && col >= 0 && col < 15)
@@ -148,9 +148,10 @@ void GameBoard::setSquareColor(int row, int col, Color c)
     }
 }
 
+// Sets the specified robot to pain a specific color
 void GameBoard::setRobotPaintColor(RobotColor robot, Color c)
 {
-    if (robot == RobotColor::RED)
+    if (robot == RobotColor::XRED)
     {
         board[redRobotRow][redRobotCol].setSquareColor(c);
     }
@@ -161,6 +162,7 @@ void GameBoard::setRobotPaintColor(RobotColor robot, Color c)
     notifyScoreChange();
 }
 
+// returns the number of red squares on the board
 int GameBoard::redScore() const
 {
     int score = 0;
@@ -177,25 +179,25 @@ int GameBoard::redScore() const
     return score;
 }
 
-// Notify observers of square change
+// Notifies observers of a square change
 void GameBoard::notifySquareChange(int row, int col)
 {
     notifyObservers(new std::string("Square changed at (" + std::to_string(row) + ", " + std::to_string(col) + ")"));
 }
 
-// Notify observers of robot movement
+// Notifies observers of any robot movement
 void GameBoard::notifyRobotMove(RobotMoveRequest &mr)
 {
-    notifyObservers(new std::string("Robot moved: " + std::string((mr.robot == RobotColor::RED) ? "Red" : "Blue")));
+    notifyObservers(new std::string("Robot moved: " + std::string((mr.robot == RobotColor::XRED) ? "Red" : "Blue")));
 }
 
-// Notify observers of score change
+// Notifies observers of a score change
 void GameBoard::notifyScoreChange()
 {
     notifyObservers(new std::string("Score updated. Red: " + std::to_string(redScore()) + ", Blue: " + std::to_string(blueScore())));
 }
 
-// Helper to move robot
+// Helper to move robot based on the RobotMove direction
 void GameBoard::moveRobot(RobotMoveRequest &mr, int &robotRow, int &robotCol)
 {
     switch (mr.move)

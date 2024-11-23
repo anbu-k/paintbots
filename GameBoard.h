@@ -9,37 +9,48 @@
 #include <vector>
 #include <string>
 
-// Enumeration for robot colors and moves
-enum class RobotColor { RED, BLUE };
-enum class RobotMove { ROTATELEFT, ROTATERIGHT, FORWARD, NONE };
+// robot colors and moves
+enum class RobotColor
+{
+    XRED,
+    XBLUE
+}; // Have to change XRED and XBLUE back to red and blue in partc
+enum class RobotMove
+{
+    ROTATELEFT,
+    ROTATERIGHT,
+    FORWARD,
+    NONE
+};
 
-// Struct for RobotMoveRequest
-struct RobotMoveRequest {
+struct RobotMoveRequest
+{
     RobotColor robot;
     RobotMove move;
     bool shoot;
 };
 
-class GameBoard : public Observable<std::string> { // Subclass Observable
+class GameBoard : public Observable<std::string>
+{ // Subclass Observable
 public:
     // Static methods for Singleton pattern
-    static GameBoard* getInstance(const std::string& password);
-    static GameBoard* getInstance(const std::string& password, const Config& config);
+    static GameBoard *getInstance(const std::string &password);
+    static GameBoard *getInstance(const std::string &password, const Config &config);
 
-    // Deleted methods to prevent copying
-    GameBoard(const GameBoard&) = delete;
-    GameBoard& operator=(const GameBoard&) = delete;
+    // Deleted methods to prevent copying for singleton
+    GameBoard(const GameBoard &) = delete;
+    GameBoard &operator=(const GameBoard &) = delete;
 
     // Methods for game interaction
-    InternalBoardSquare& getSquare(int row, int col);
-    bool MoveRobot(RobotMoveRequest& mr);
-    bool PaintBlobHit(RobotMoveRequest& mr);
+    InternalBoardSquare &getSquare(int row, int col);
+    bool MoveRobot(RobotMoveRequest &mr);
+    bool PaintBlobHit(RobotMoveRequest &mr);
     int blueScore() const;
     int redScore() const;
     void setSquareColor(int row, int col, Color c);
     void setRobotPaintColor(RobotColor robot, Color c);
-    ExternalBoardSquare** getLongRangeScan();
-    ExternalBoardSquare** getShortRangeScan(RobotColor rc);
+    ExternalBoardSquare **getLongRangeScan();
+    ExternalBoardSquare **getShortRangeScan(RobotColor rc);
 
     // Getter methods for robot positions
     int getRedRobotRow() const { return redRobotRow; }
@@ -49,20 +60,20 @@ public:
 
     // Observer notification methods
     void notifySquareChange(int row, int col);
-    void notifyRobotMove(RobotMoveRequest& mr);
+    void notifyRobotMove(RobotMoveRequest &mr);
     void notifyScoreChange();
 
 private:
     // Private constructor(s)
-    GameBoard(); // Default constructor
-    GameBoard(const Config& config); // Constructor with configuration
+    GameBoard();                     // Default constructor
+    GameBoard(const Config &config); // Constructor with configuration
 
     // Private methods for initialization
     void initializeDefaultBoard();
-    void initializeBoardFromConfig(const Config& config);
+    void initializeConfigBoard(const Config &config);
 
     // Singleton instance
-    static GameBoard* uniqueInstance;
+    static GameBoard *uniqueInstance;
 
     std::vector<std::vector<InternalBoardSquare>> board;
 
@@ -72,8 +83,8 @@ private:
     int blueRobotRow;
     int blueRobotCol;
 
-    // Helper method for robot movement
-    void moveRobot(RobotMoveRequest& mr, int& robotRow, int& robotCol);
+    // Helper to move robot based on the RobotMove direction
+    void moveRobot(RobotMoveRequest &mr, int &robotRow, int &robotCol);
 };
 
-#endif // GAMEBOARD_H
+#endif 

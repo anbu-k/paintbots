@@ -165,7 +165,6 @@ private:
     }
 };
 
-// Main function
 int main() {
     ConfigTest test;
     return test.doTests() ? 0 : 1;

@@ -4,11 +4,11 @@
 
 class ITest {
 public:
-    // Pure virtual method that must be overridden by subclasses
+    // virtual method that will be overridden by subclasses
     virtual bool doTests() const = 0;
 
-    // Virtual destructor to ensure proper cleanup of derived classes
+    // virtual destructor 
     virtual ~ITest() {}
 };
 
-#endif // ITEST_H
+#endif 

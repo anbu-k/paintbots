@@ -7,16 +7,18 @@
 #include <iostream>
 #include <string>
 
-class PlainDisplay : public Observer<std::string> {
+//  this class is an observer for the GameBoard class + it outputs the state of the game board in ASCII
+class PlainDisplay : public Observer<std::string>
+{
 private:
-    GameBoard* gameBoard;
+    GameBoard *gameBoard;
 
 public:
-    PlainDisplay(GameBoard* gameBoard); // Constructor
-    ~PlainDisplay();                    // Destructor
+    PlainDisplay(GameBoard *gameBoard);  // Constructor + initializes the PlainDisplay and registers it as an observer for the GameBoard
+    ~PlainDisplay(); // Destructor + unregisters the PlainDisplay from the GameBoard                   
 
-    void update(std::string* message) override; // Update method
-    void display();                              // Display ASCII board
+    void update(std::string *message) override; // Update method
+    void display();                             // Displays ASCII board
 };
 
-#endif // PLAINDISPLAY_H
+#endif

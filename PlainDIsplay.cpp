@@ -23,7 +23,7 @@ void PlainDisplay::update(std::string *message)
     display();
 }
 
-// Display the ASCII board
+// This displays the ASCII board
 void PlainDisplay::display()
 {
     for (int row = 0; row < 15; ++row)
