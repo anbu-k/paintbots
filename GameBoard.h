@@ -6,32 +6,12 @@
 #include "ExternalBoardSquare.h"
 #include "Config.h"
 #include "ObserverPattern.h"
+#include "Robot.h" // for RobotColor and RobotMoveRequest
 #include <vector>
 #include <string>
 
-// robot colors and moves
-enum class RobotColor
-{
-    XRED,
-    XBLUE
-}; // Have to change XRED and XBLUE back to red and blue in partc
-enum class RobotMove
-{
-    ROTATELEFT,
-    ROTATERIGHT,
-    FORWARD,
-    NONE
-};
-
-struct RobotMoveRequest
-{
-    RobotColor robot;
-    RobotMove move;
-    bool shoot;
-};
-
 class GameBoard : public Observable<std::string>
-{ // Subclass Observable
+{
 public:
     // Static methods for Singleton pattern
     static GameBoard *getInstance(const std::string &password);
@@ -43,28 +23,29 @@ public:
 
     // Methods for game interaction
     InternalBoardSquare &getSquare(int row, int col);
-    bool MoveRobot(RobotMoveRequest &mr);
-    bool PaintBlobHit(RobotMoveRequest &mr);
+    ExternalBoardSquare **getSurroundings(Robot::RobotColor color) const;
+    bool MoveRobot(Robot::RobotMoveRequest &mr);
+    bool PaintBlobHit(Robot::RobotMoveRequest &mr);
+    bool isGameOver() const;
+    bool isValidMove(Robot::RobotColor color, const Robot::RobotMoveRequest &move) const;
     int blueScore() const;
     int redScore() const;
     void setSquareColor(int row, int col, Color c);
-    void setRobotPaintColor(RobotColor robot, Color c);
+    void setRobotPaintColor(Robot::RobotColor robot, Color c);
+    void applyMove(Robot::RobotColor color, Robot::RobotMoveRequest &move);
     ExternalBoardSquare **getLongRangeScan();
-    ExternalBoardSquare **getShortRangeScan(RobotColor rc);
-
-    // Getter methods for robot positions
-    int getRedRobotRow() const { return redRobotRow; }
-    int getRedRobotCol() const { return redRobotCol; }
-    int getBlueRobotRow() const { return blueRobotRow; }
-    int getBlueRobotCol() const { return blueRobotCol; }
+    ExternalBoardSquare **getShortRangeScan(Robot::RobotColor rc);
 
     // Observer notification methods
     void notifySquareChange(int row, int col);
-    void notifyRobotMove(RobotMoveRequest &mr);
+    void notifyRobotMove(Robot::RobotMoveRequest &mr);
     void notifyScoreChange();
 
+    // returns winner
+    std::string getWinner() const;
+
 private:
-    // Private constructor(s)
+    // Private constructors
     GameBoard();                     // Default constructor
     GameBoard(const Config &config); // Constructor with configuration
 
@@ -77,14 +58,11 @@ private:
 
     std::vector<std::vector<InternalBoardSquare>> board;
 
-    // Robot positions
-    int redRobotRow;
-    int redRobotCol;
-    int blueRobotRow;
-    int blueRobotCol;
+    Robot redRobot;
+    Robot blueRobot;
 
-    // Helper to move robot based on the RobotMove direction
-    void moveRobot(RobotMoveRequest &mr, int &robotRow, int &robotCol);
+    // Helper
+    void moveRobot(Robot::RobotMoveRequest &mr, Robot &robot);
 };
 
-#endif 
+#endif

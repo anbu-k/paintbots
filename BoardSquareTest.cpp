@@ -2,7 +2,8 @@
 #include "BoardSquare.h"
 #include <iostream>
 
-int main() {
+int main()
+{
     BoardSquare square;
     bool pass = true;
 

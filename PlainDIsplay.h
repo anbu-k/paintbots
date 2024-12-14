@@ -14,8 +14,8 @@ private:
     GameBoard *gameBoard;
 
 public:
-    PlainDisplay(GameBoard *gameBoard);  // Constructor + initializes the PlainDisplay and registers it as an observer for the GameBoard
-    ~PlainDisplay(); // Destructor + unregisters the PlainDisplay from the GameBoard                   
+    PlainDisplay(GameBoard *gameBoard); // Constructor + initializes the PlainDisplay and registers it as an observer for the GameBoard
+    ~PlainDisplay();                    // Destructor + unregisters the PlainDisplay from the GameBoard
 
     void update(std::string *message) override; // Update method
     void display();                             // Displays ASCII board
