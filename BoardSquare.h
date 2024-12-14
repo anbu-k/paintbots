@@ -35,7 +35,7 @@ private:
     SquareType squareType;         // Type of the square
     bool redRobotPresentFlag;      // Whether a red robot is on the square
     bool blueRobotPresentFlag;     // Whether a blue robot is on the square
-    Direction robotDirectionValue; // Direction a robot is facing 
+    Direction robotDirectionValue; // Direction a robot is facing
 
 public:
     // Default Constructor
@@ -94,4 +94,4 @@ public:
     inline void setRobotDirection(Direction direction) { robotDirectionValue = direction; }
 };
 
-#endif 
+#endif

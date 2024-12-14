@@ -5,11 +5,12 @@
 #include <string>
 #include <stdexcept>
 
-class Config {
+class Config
+{
 public:
     // Constructors
-    Config();  // Default constructor 
-    Config(const std::string& filePath);  // Constructor that parses a configuration file
+    Config();                            // Default constructor
+    Config(const std::string &filePath); // Constructor that parses a configuration file
 
     // Getter methods for configuration parameters
     int getHitDuration() const;
@@ -31,10 +32,10 @@ private:
     int longRangeLimit;
 
     // Helper method to parse the configuration file
-    void parseConfigFile(const std::string& filePath);
+    void parseConfigFile(const std::string &filePath);
 
     // Helper method to trim whitespace from a string
-    std::string trim(const std::string& str);
+    std::string trim(const std::string &str);
 };
 
 #endif // CONFIG_H

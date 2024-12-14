@@ -3,9 +3,10 @@
 #include "GameBoard.h"
 #include <iostream>
 
-int main() {
-    GameBoard* gameBoard = GameBoard::getInstance("xyzzy"); // Creates the GameBoard singleton
-    PlainDisplay display(gameBoard);                       // Creates a PlainDisplay instance
+int main()
+{
+    GameBoard *gameBoard = GameBoard::getInstance("xyzzy"); // Creates the GameBoard singleton
+    PlainDisplay display(gameBoard);                        // Creates a PlainDisplay instance
 
     // Displays the board
     std::cout << "Initial Board:" << std::endl;

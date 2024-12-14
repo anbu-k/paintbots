@@ -4,6 +4,7 @@
 #include <iostream>
 #include <cassert>
 #include <string>
+#include "Robot.h"
 
 // Helper function to check test results
 void checkTest(const std::string &testName, bool condition)
@@ -82,7 +83,7 @@ void testObserverNotifications()
 
     // Triggers notifications
     gameBoard->setSquareColor(5, 5, Color::RED);
-    gameBoard->setRobotPaintColor(RobotColor::XBLUE, Color::BLUE);
+    gameBoard->setRobotPaintColor(Robot::RobotColor::BLUE, Color::BLUE);
 
     const auto &messages = observer.getMessages();
     checkTest("Observer - Correct number of notifications", messages.size() == 2);
