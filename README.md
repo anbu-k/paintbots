@@ -1,4 +1,4 @@
-# coms3270P2 - Paintbots
+Paintbots
 
 This project is a C++ simulation for paintbots
 
@@ -78,6 +78,3 @@ To clean:
   - lazyRobot: Stays in place, firing paint blobs randomly.
   - randomRobot: Moves to random valid squares without shooting.
   - AntiRandom: Optimized to defeat randomRobot with a success rate of 80%.
-
-
-I test my code in pyrite and it compiles
